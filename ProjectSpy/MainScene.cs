@@ -1,16 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectSpy.Player;
 using System;
 using System.Collections.Generic;
 
 namespace ProjectSpy
 {
-    public class Game1 : Game
+    public class MainScene : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        List<Player>  Players = new List<Player>();
+        List<Spy>  Players = new List<Spy>();
         Collision Collisions = new Collision();
         Texture2D Background;
         Texture2D Player;
@@ -26,7 +27,7 @@ namespace ProjectSpy
         int TimerSeconds = 0;
         int TimerMinutes = 0;
 
-        public Game1()
+        public MainScene()
         {
             _graphics = new GraphicsDeviceManager(this)
             {
@@ -39,8 +40,8 @@ namespace ProjectSpy
 
         protected override void Initialize()
         {
-            Players.Add(new Player(0));
-            Players.Add(new Player(1));
+            Players.Add(new Spy(0));
+            Players.Add(new Spy(1));
             PlayersLayers = Players.Count;
 
             Collisions.Walls.Add(new Collision.Wall(new Point(64, 63), new Point(143, 63)));
@@ -66,7 +67,7 @@ namespace ProjectSpy
                 Exit();
 
             Input.Update();
-            foreach (Player player1 in Players)
+            foreach (Spy player1 in Players)
             {
                 player1.Update(gameTime);
                 if (player1.DoMove)
@@ -76,7 +77,7 @@ namespace ProjectSpy
                 }
                 if (player1.DoKick)
                 {
-                    foreach (Player player2 in Players)
+                    foreach (Spy player2 in Players)
                     {
                         if (player1.PlayerId != player2.PlayerId)
                         {
@@ -140,7 +141,7 @@ namespace ProjectSpy
 
             for (int i = 1; i <= PlayersLayers; i++)
             {
-                foreach (Player player in Players)
+                foreach (Spy player in Players)
                 {
                     if(player.Layer == i)
                     {
@@ -149,7 +150,7 @@ namespace ProjectSpy
                 }
             }
 
-            foreach (Player player in Players) 
+            foreach (Spy player in Players) 
             {
                 
 
@@ -169,7 +170,7 @@ namespace ProjectSpy
             base.Draw(gameTime);
         }
 
-        void CollisionUpdate(Player player)
+        void CollisionUpdate(Spy player)
         {
 
             player.PlayerMovement.BanKeyLeft = Collisions.CheckCollision(Collisions.Walls[2].StartWall, Collisions.Walls[2].EndWall, player.PlayerMoveCollision);
@@ -231,7 +232,7 @@ namespace ProjectSpy
 
             _graphics.ApplyChanges();
 
-            foreach (Player player in Players)
+            foreach (Spy player in Players)
             {
                 player.ChangeScale(OldScale, NewScale);
             }

@@ -8,9 +8,9 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSpy
+namespace ProjectSpy.Player
 {
-    internal class Player
+    internal class Spy
     {
         public Movement PlayerMovement;
         public bool DoMove = false;
@@ -45,7 +45,7 @@ namespace ProjectSpy
         private int itemLocationOffsetId = 0;
         private SpriteEffects itemFlip = SpriteEffects.None;
 
-        public Player(int playerId)
+        public Spy(int playerId)
         {
             PlayerId = playerId;
             //PlayerMoveOffset.Y -= (playerId * 104);
@@ -54,25 +54,25 @@ namespace ProjectSpy
             AnimationThreshold = 100;
             PlayerAnimations = new Rectangle[9];
             PlayerMovement = new Movement(playerId);
-            PlayerMovement.Position = new Vector2(50, 50 + (playerId * 104));
+            PlayerMovement.Position = new Vector2(50, 50 + playerId * 104);
 
             //anim
             //idle
-            PlayerAnimations[0] = new Rectangle(0, 0 + (80 * playerId), 32, 39); //down
-            PlayerAnimations[1] = new Rectangle(33, 0 + (80 * playerId), 32, 39); //up
-            PlayerAnimations[2] = new Rectangle(66, 0 + (80 * playerId), 32, 39); //left right
+            PlayerAnimations[0] = new Rectangle(0, 0 + 80 * playerId, 32, 39); //down
+            PlayerAnimations[1] = new Rectangle(33, 0 + 80 * playerId, 32, 39); //up
+            PlayerAnimations[2] = new Rectangle(66, 0 + 80 * playerId, 32, 39); //left right
 
             //walk
-            PlayerAnimations[3] = new Rectangle(0, 40 + (80 * playerId), 32, 39); //down
-            PlayerAnimations[4] = new Rectangle(33, 40 + (80 * playerId), 32, 39); //up
-            PlayerAnimations[5] = new Rectangle(66, 40 + (80 * playerId), 32, 39); //left right
+            PlayerAnimations[3] = new Rectangle(0, 40 + 80 * playerId, 32, 39); //down
+            PlayerAnimations[4] = new Rectangle(33, 40 + 80 * playerId, 32, 39); //up
+            PlayerAnimations[5] = new Rectangle(66, 40 + 80 * playerId, 32, 39); //left right
 
             //Kick
-            PlayerAnimations[6] = new Rectangle(99, 0 + (80 * playerId), 32, 39);
-            PlayerAnimations[7] = new Rectangle(99, 40 + (80 * playerId), 32, 39);
+            PlayerAnimations[6] = new Rectangle(99, 0 + 80 * playerId, 32, 39);
+            PlayerAnimations[7] = new Rectangle(99, 40 + 80 * playerId, 32, 39);
 
             //ReceiveKick
-            PlayerAnimations[8] = new Rectangle(132, 40 + (80 * playerId), 32, 39);
+            PlayerAnimations[8] = new Rectangle(132, 40 + 80 * playerId, 32, 39);
 
             //item
             //Bomb
@@ -118,7 +118,7 @@ namespace ProjectSpy
 
             if (Input.KeyPressed(Keys.Z))
             {
-                if(item == 4)
+                if (item == 4)
                 {
                     item = 0;
                 }
@@ -187,7 +187,7 @@ namespace ProjectSpy
                     }
 
 
-                    if ((PlayerMovement.KeyUp && !PlayerMovement.KeyLeft && !PlayerMovement.KeyRight) && !PlayerMovement.KeyKick)  //up
+                    if (PlayerMovement.KeyUp && !PlayerMovement.KeyLeft && !PlayerMovement.KeyRight && !PlayerMovement.KeyKick)  //up
                     {
                         itemLocationOffsetId = 1;
                         itemFlip = SpriteEffects.FlipHorizontally;
@@ -202,7 +202,7 @@ namespace ProjectSpy
                             AnimationFlip = 0;
                         }
                     }
-                    else if ((PlayerMovement.KeyDown && !PlayerMovement.KeyLeft && !PlayerMovement.KeyRight) && !PlayerMovement.KeyKick)  //down
+                    else if (PlayerMovement.KeyDown && !PlayerMovement.KeyLeft && !PlayerMovement.KeyRight && !PlayerMovement.KeyKick)  //down
                     {
                         itemLocationOffsetId = 0;
                         itemFlip = 0;
@@ -307,32 +307,32 @@ namespace ProjectSpy
 
         public void ChangeScale(float OldScale, float NewScale)
         {
-            PlayerMovement.Acceleration = (PlayerMovement.Acceleration / OldScale) * NewScale;
-            PlayerMovement.Decceleration = (PlayerMovement.Decceleration / OldScale) * NewScale;
-            PlayerMovement.TopSeed = (PlayerMovement.TopSeed / OldScale) * NewScale;
+            PlayerMovement.Acceleration = PlayerMovement.Acceleration / OldScale * NewScale;
+            PlayerMovement.Decceleration = PlayerMovement.Decceleration / OldScale * NewScale;
+            PlayerMovement.TopSeed = PlayerMovement.TopSeed / OldScale * NewScale;
 
-            PlayerMovement.Position = (PlayerMovement.Position / OldScale) * NewScale;
+            PlayerMovement.Position = PlayerMovement.Position / OldScale * NewScale;
 
-            PlayerMoveOffset.X = (PlayerMoveOffset.X / (int)OldScale) * (int)NewScale;
-            PlayerMoveOffset.Y = (PlayerMoveOffset.Y / (int)OldScale) * (int)NewScale;
-            PlayerMoveCollision.X = (PlayerMoveCollision.X / (int)OldScale) * (int)NewScale;
-            PlayerMoveCollision.Y = (PlayerMoveCollision.Y / (int)OldScale) * (int)NewScale;
-            PlayerMoveCollision.Height = (PlayerMoveCollision.Height / (int)OldScale) * (int)NewScale;
-            PlayerMoveCollision.Width = (PlayerMoveCollision.Width / (int)OldScale) * (int)NewScale;
+            PlayerMoveOffset.X = PlayerMoveOffset.X / (int)OldScale * (int)NewScale;
+            PlayerMoveOffset.Y = PlayerMoveOffset.Y / (int)OldScale * (int)NewScale;
+            PlayerMoveCollision.X = PlayerMoveCollision.X / (int)OldScale * (int)NewScale;
+            PlayerMoveCollision.Y = PlayerMoveCollision.Y / (int)OldScale * (int)NewScale;
+            PlayerMoveCollision.Height = PlayerMoveCollision.Height / (int)OldScale * (int)NewScale;
+            PlayerMoveCollision.Width = PlayerMoveCollision.Width / (int)OldScale * (int)NewScale;
 
             for (int i = 0; i < 4; i++)
             {
-                BombOffsets[i].X = (BombOffsets[i].X / (int)OldScale) * (int)NewScale;
-                BombOffsets[i].Y = (BombOffsets[i].Y / (int)OldScale) * (int)NewScale;
+                BombOffsets[i].X = BombOffsets[i].X / (int)OldScale * (int)NewScale;
+                BombOffsets[i].Y = BombOffsets[i].Y / (int)OldScale * (int)NewScale;
 
-                SpringOffsets[i].X = (SpringOffsets[i].X / (int)OldScale) * (int)NewScale;
-                SpringOffsets[i].Y = (SpringOffsets[i].Y / (int)OldScale) * (int)NewScale;
+                SpringOffsets[i].X = SpringOffsets[i].X / (int)OldScale * (int)NewScale;
+                SpringOffsets[i].Y = SpringOffsets[i].Y / (int)OldScale * (int)NewScale;
 
-                BucketOffsets[i].X = (BucketOffsets[i].X / (int)OldScale) * (int)NewScale;
-                BucketOffsets[i].Y = (BucketOffsets[i].Y / (int)OldScale) * (int)NewScale;
+                BucketOffsets[i].X = BucketOffsets[i].X / (int)OldScale * (int)NewScale;
+                BucketOffsets[i].Y = BucketOffsets[i].Y / (int)OldScale * (int)NewScale;
 
-                TimeBombOffsets[i].X = (TimeBombOffsets[i].X / (int)OldScale) * (int)NewScale;
-                TimeBombOffsets[i].Y = (TimeBombOffsets[i].Y / (int)OldScale) * (int)NewScale;
+                TimeBombOffsets[i].X = TimeBombOffsets[i].X / (int)OldScale * (int)NewScale;
+                TimeBombOffsets[i].Y = TimeBombOffsets[i].Y / (int)OldScale * (int)NewScale;
             }
         }
     }

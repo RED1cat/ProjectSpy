@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace ProjectSpy
+namespace ProjectSpy.Player
 {
     internal class Input
     {

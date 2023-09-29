@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSpy
+namespace ProjectSpy.Player
 {
     internal class Collision
     {
@@ -54,14 +54,14 @@ namespace ProjectSpy
 
         public bool LineIntersectsLine(Point line1Start, Point line1End, Point line2Start, Point line2End)
         {
-            int denominator = ((line2End.Y - line2Start.Y) * (line1End.X - line1Start.X)) - ((line2End.X - line2Start.X) * (line1End.Y - line1Start.Y));
+            int denominator = (line2End.Y - line2Start.Y) * (line1End.X - line1Start.X) - (line2End.X - line2Start.X) * (line1End.Y - line1Start.Y);
             if (denominator == 0)
             {
                 return false;
             }
 
-            int numerator1 = ((line2End.X - line2Start.X) * (line1Start.Y - line2Start.Y)) - ((line2End.Y - line2Start.Y) * (line1Start.X - line2Start.X));
-            int numerator2 = ((line1End.X - line1Start.X) * (line1Start.Y - line2Start.Y)) - ((line1End.Y - line1Start.Y) * (line1Start.X - line2Start.X));
+            int numerator1 = (line2End.X - line2Start.X) * (line1Start.Y - line2Start.Y) - (line2End.Y - line2Start.Y) * (line1Start.X - line2Start.X);
+            int numerator2 = (line1End.X - line1Start.X) * (line1Start.Y - line2Start.Y) - (line1End.Y - line1Start.Y) * (line1Start.X - line2Start.X);
 
             if (numerator1 == 0 || numerator2 == 0)
             {
@@ -71,7 +71,7 @@ namespace ProjectSpy
             double r = (double)numerator1 / denominator;
             double s = (double)numerator2 / denominator;
 
-            return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
+            return r >= 0 && r <= 1 && s >= 0 && s <= 1;
         }
     }
 }

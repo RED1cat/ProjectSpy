@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Drawing;
 
-namespace ProjectSpy
+namespace ProjectSpy.Player
 {
     internal class Movement
     {
@@ -72,7 +72,7 @@ namespace ProjectSpy
                     break;
             }
         }
-        
+
         public void ProcessMovementKeys()
         {
             KeyLeft = Input.KeyDown(KeyCodeLeft);
@@ -98,7 +98,7 @@ namespace ProjectSpy
                 LastKey = MovementKeys.Down;
             }
 
-            if(KeyLeft || KeyRight || KeyUp || KeyDown)
+            if (KeyLeft || KeyRight || KeyUp || KeyDown)
             {
                 DoMove = true;
             }

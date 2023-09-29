@@ -9,7 +9,7 @@
         
         public static void Main()
         {
-            using var game = new ProjectSpy.Game1();
+            using var game = new MainScene();
             game.Run();
         }
     }
